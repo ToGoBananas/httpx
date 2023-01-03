@@ -7,6 +7,7 @@ import os
 import re
 import sys
 import time
+from datetime import datetime
 import typing
 from pathlib import Path
 from urllib.request import getproxies
@@ -69,6 +70,8 @@ def primitive_value_to_str(value: "PrimitiveData") -> str:
         return ""
     elif isinstance(value, (str, float, int)):
         return str(value)
+    elif isinstance(value, datetime):
+        return value.isoformat()
     raise TypeError(
         f"Expected str, int, float, bool, or None. Got {type(value).__name__!r}."
     )
