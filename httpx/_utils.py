@@ -7,6 +7,7 @@ import os
 import re
 import sys
 import time
+from decimal import Decimal
 from datetime import datetime, date
 import typing
 from pathlib import Path
@@ -70,8 +71,10 @@ def primitive_value_to_str(value: "PrimitiveData") -> str:
         return ""
     elif isinstance(value, (str, float, int)):
         return str(value)
-    elif isinstance(value, (date, datetime)):
+    elif getattr(value, 'isoformat', None):
         return value.isoformat()
+    elif isinstance(value, Decimal):
+        return float(value)
     raise TypeError(
         f"Expected str, int, float, bool, or None. Got {type(value).__name__!r}."
     )
